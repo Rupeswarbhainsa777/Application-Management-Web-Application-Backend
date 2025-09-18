@@ -31,4 +31,9 @@ public class JobController {
     public ResponseEntity<String> deleteJob(@PathVariable int id) {
         return jobService.deleteJobById(id);
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<JobManagement> updateJob(@PathVariable int id, @RequestBody JobManagement job) {
+        return jobService.updateJob(id, job);
+    }
+
 }

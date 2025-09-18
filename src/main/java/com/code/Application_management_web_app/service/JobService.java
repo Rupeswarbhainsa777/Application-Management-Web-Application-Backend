@@ -44,4 +44,19 @@ public class JobService {
             return ResponseEntity.status(404).body("Job with ID " + id + " not found.");
         }
     }
+
+    public ResponseEntity<JobManagement> updateJob(int id, JobManagement updatedJob) {
+        return jobRepository.findById(id).map(existingJob -> {
+            // Update fields
+            existingJob.setCompanyName(updatedJob.getCompanyName());
+            existingJob.setJobType(updatedJob.getJobType());
+            existingJob.setDate(updatedJob.getDate());
+            existingJob.setCompanyType(updatedJob.getCompanyType());
+            existingJob.setStatus(updatedJob.getStatus());
+
+            JobManagement savedJob = jobRepository.save(existingJob);
+            return new ResponseEntity<>(savedJob, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 }
